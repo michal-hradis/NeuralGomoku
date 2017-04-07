@@ -1,0 +1,200 @@
+
+layer {
+  name: "data"
+  type: "Input"
+  top: "data"
+  input_param {
+    shape: {
+      dim: 1024
+      dim: 2
+      dim: 19
+      dim: 19
+      }
+  }
+}
+
+layer {
+  name: "conv1_1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1_1"
+
+  param { lr_mult: 1,
+       decay_mult: 1}
+  param { lr_mult: 1,
+       decay_mult: 0}
+  convolution_param {
+    bias_term: true
+    kernel_size: 5
+    num_output: 32
+    stride: 1
+    pad: 2
+    group: 1
+    weight_filler {
+      type: "xavier"
+      std: 0.001
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+ 
+  }
+}
+layer {
+  name: "conv1_1-relu"
+  type: "ReLU"
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+layer {
+  name: "conv1_2"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "conv1_2"
+
+  param { lr_mult: 1,
+       decay_mult: 1}
+  param { lr_mult: 1,
+       decay_mult: 0}
+  convolution_param {
+    bias_term: true
+    kernel_size: 3
+    num_output: 32
+    stride: 1
+    pad: 1
+    group: 1
+    weight_filler {
+      type: "xavier"
+      std: 0.001
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+ 
+  }
+}
+layer {
+  name: "conv1_2-relu"
+  type: "ReLU"
+  bottom: "conv1_2"
+  top: "conv1_2"
+}
+layer {
+  name: "conv1_3"
+  type: "Convolution"
+  bottom: "conv1_2"
+  top: "conv1_3"
+
+  param { lr_mult: 1,
+       decay_mult: 1}
+  param { lr_mult: 1,
+       decay_mult: 0}
+  convolution_param {
+    bias_term: true
+    kernel_size: 3
+    num_output: 48
+    stride: 1
+    pad: 1
+    group: 1
+    weight_filler {
+      type: "xavier"
+      std: 0.001
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+ 
+  }
+}
+layer {
+  name: "conv1_3-relu"
+  type: "ReLU"
+  bottom: "conv1_3"
+  top: "conv1_3"
+}
+layer {
+  name: "conv1_4"
+  type: "Convolution"
+  bottom: "conv1_3"
+  top: "conv1_4"
+
+  param { lr_mult: 1,
+       decay_mult: 1}
+  param { lr_mult: 1,
+       decay_mult: 0}
+  convolution_param {
+    bias_term: true
+    kernel_size: 3
+    num_output: 48
+    stride: 1
+    pad: 1
+    group: 1
+    weight_filler {
+      type: "xavier"
+      std: 0.001
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+ 
+  }
+}
+layer {
+  name: "conv1_4-relu"
+  type: "ReLU"
+  bottom: "conv1_4"
+  top: "conv1_4"
+}
+layer {
+  name: "conv1_5"
+  type: "Convolution"
+  bottom: "conv1_4"
+  top: "conv1_5"
+
+  param { lr_mult: 1,
+       decay_mult: 1}
+  param { lr_mult: 1,
+       decay_mult: 0}
+  convolution_param {
+    bias_term: true
+    kernel_size: 3
+    num_output: 1
+    stride: 1
+    pad: 1
+    group: 1
+    weight_filler {
+      type: "xavier"
+      std: 0.001
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+ 
+  }
+}
+
+layer{
+    name: "ods"
+    type: "Reshape"
+    bottom: "conv1_5"
+    top: "ods"
+    reshape_param{
+        shape{
+            dim: 0
+            dim: -1
+        }
+    }
+}
+layer {
+  name: "out"
+  top: "out"
+  type: "Softmax"
+  bottom: "ods"
+}
+
+
